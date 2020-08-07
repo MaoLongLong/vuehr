@@ -1,18 +1,121 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="home">
+    <el-container>
+      <el-header class="header">
+        <h1 class="title">微人事</h1>
+        <el-dropdown class="user-info" @command="commandHandler">
+          <span class="el-dropdown-link">
+            {{ user.name }}<img :src="user.avatar" alt="avatar"/>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="userInfo">个人中心</el-dropdown-item>
+            <el-dropdown-item command="settings">设置</el-dropdown-item>
+            <el-dropdown-item command="logout" divided>注销登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-header>
+      <el-container>
+        <el-aside class="aside" width="200px">
+          <el-menu router :default-active="$route.path" unique-opened>
+            <el-submenu v-for="(route, i) in routes"
+                        :key="i" :index="route.name">
+              <template slot="title">
+                <i :class="route.iconCls"></i>
+                <span>{{ route.name }}</span>
+              </template>
+              <el-menu-item v-for="(child, j) in route.children" :key="j" :index="child.path">
+                {{ child.name }}
+              </el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </el-aside>
+        <el-main class="main">
+          <router-view/>
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import { clearLocalStorage, getUser } from '../utils/localStore';
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      user: getUser(),
+    };
+  },
+  computed: {
+    routes() {
+      console.log(this.$store.state.routes);
+      return this.$store.state.routes;
+    },
+  },
+  methods: {
+    commandHandler(cmd) {
+      console.log(cmd);
+      this.$confirm('此操作将注销登录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          this.$http.post('/logout');
+          clearLocalStorage();
+          this.$store.commit('initRoutes', []);
+          this.$router.replace('/');
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作',
+          });
+        });
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .header {
+    background-color: #409EFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+
+    .title {
+      color: #ffffff;
+      font-size: 20px;
+    }
+
+    .user-info {
+      cursor: pointer;
+
+      .el-dropdown-link {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        color: #ffffff;
+
+        img {
+          border-radius: 50%;
+          margin-left: 8px;
+          width: 48px;
+          height: 48px;
+        }
+      }
+    }
+  }
+
+  .aside {
+    background-color: green;
+  }
+
+  .main {
+    background-color: white;
+  }
+</style>
