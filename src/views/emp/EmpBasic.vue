@@ -1,6 +1,5 @@
 <template>
     <div id="emp-basic">
-      基本资料
     </div>
 </template>
 

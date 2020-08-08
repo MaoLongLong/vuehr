@@ -1,6 +1,5 @@
 <template>
     <div id="per-train">
-      员工培训
     </div>
 </template>
 

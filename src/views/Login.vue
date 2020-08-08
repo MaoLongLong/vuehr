@@ -4,11 +4,12 @@
       <h2 class="login-form-title">登录</h2>
       <el-form :model="loginForm" ref="loginForm" :rules="rules">
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="el-icon-user" placeholder="请输入用户名"/>
+          <el-input v-model="loginForm.username" prefix-icon="el-icon-user"
+                    placeholder="请输入用户名" @keyup.enter.native="$refs.passwordInput.focus()"/>
         </el-form-item>
         <el-form-item prop="password">
           <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" show-password
-                    placeholder="请输入密码"/>
+                    placeholder="请输入密码" ref="passwordInput" @keyup.enter.native="submitLoginForm"/>
         </el-form-item>
         <el-form-item>
           <el-button :disabled="loginBtnDisabled" type="primary"

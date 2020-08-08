@@ -1,6 +1,5 @@
 <template>
     <div id="emp-adv">
-      高级资料
     </div>
 </template>
 

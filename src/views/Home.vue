@@ -17,8 +17,12 @@
       <el-container>
         <el-aside class="aside" width="200px">
           <el-menu router :default-active="$route.path" unique-opened>
+            <el-menu-item index="/home">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">首页</span>
+            </el-menu-item>
             <el-submenu v-for="(route, i) in routes"
-                        :key="i" :index="route.name">
+                        :key="i" :index="(i).toString()">
               <template slot="title">
                 <i :class="route.iconCls"></i>
                 <span>{{ route.name }}</span>
@@ -30,6 +34,15 @@
           </el-menu>
         </el-aside>
         <el-main class="main">
+          <el-breadcrumb separator="/" v-if="$route.path !== '/home'">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item v-for="(r, i) in $route.matched" :key="i">
+              {{ r.name }}
+            </el-breadcrumb-item>
+          </el-breadcrumb>
+          <div v-else>
+            <h1>Hello World</h1>
+          </div>
           <router-view/>
         </el-main>
       </el-container>
@@ -49,7 +62,6 @@ export default {
   },
   computed: {
     routes() {
-      console.log(this.$store.state.routes);
       return this.$store.state.routes;
     },
   },

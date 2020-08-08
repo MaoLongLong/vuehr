@@ -17,6 +17,8 @@ import {
   DropdownItem,
   Dropdown,
   MessageBox,
+  Breadcrumb,
+  BreadcrumbItem,
 } from 'element-ui';
 import App from './App.vue';
 import router from './router';
@@ -40,6 +42,8 @@ Vue.use(Submenu);
 Vue.use(Dropdown);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
+Vue.use(Breadcrumb);
+Vue.use(BreadcrumbItem);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$http = Http;

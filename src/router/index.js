@@ -15,7 +15,7 @@ const routes = [
   },
   {
     path: '/home',
-    name: 'Home',
+    name: '首页',
     component: Home,
   },
 ];
@@ -25,9 +25,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name) {
-    document.title = to.name;
-  }
+  document.title = to.name || '';
   if (to.path === '/') {
     next();
   } else {
