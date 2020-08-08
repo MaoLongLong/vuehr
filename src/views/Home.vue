@@ -1,6 +1,6 @@
 <template>
-  <div id="home">
-    <el-container>
+  <div id="home" style="height: 100%">
+    <el-container style="height: 100%">
       <el-header class="header">
         <h1 class="title">微人事</h1>
         <el-dropdown class="user-info" @command="commandHandler">
@@ -124,10 +124,12 @@ export default {
   }
 
   .aside {
-    background-color: green;
-  }
+    border-right: solid 1px #e6e6e6;
+    border-right-color: rgb(230, 230, 230);
+    overflow: hidden;
 
-  .main {
-    background-color: white;
+    .el-menu {
+      border-right: none;
+    }
   }
 </style>

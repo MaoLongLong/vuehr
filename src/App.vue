@@ -18,6 +18,12 @@ export default {
     "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
 
+  html,
+  body,
+  #app {
+    height: 100%;
+  }
+
   a {
     text-decoration: none;
   }
