@@ -32,11 +32,11 @@ instance.interceptors.response.use((value) => {
     Message.error('服务器超时');
     return Promise.reject(error);
   }
-  if (error.status === 404 || error.status === 504) {
+  if (error.response.status === 404 || error.response.status === 504) {
     Message.error('服务器被吃了( ╯□╰ )');
-  } else if (error.status === 403) {
+  } else if (error.response.status === 403) {
     Message.error('权限不足');
-  } else if (error.status === 401) {
+  } else if (error.response.status === 401) {
     router.push('/');
     Message.error('尚未登陆，请登录');
   } else if (error.data.msg || error.data.message) {

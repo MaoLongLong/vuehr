@@ -4,7 +4,7 @@
       <h2 class="login-form-title">登录</h2>
       <el-form :model="loginForm" ref="loginForm" :rules="rules">
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="el-icon-user"
+          <el-input v-model="loginForm.username" prefix-icon="el-icon-user" ref="usernameInput"
                     placeholder="请输入用户名" @keyup.enter.native="$refs.passwordInput.focus()"/>
         </el-form-item>
         <el-form-item prop="password">
@@ -60,7 +60,11 @@ export default {
             .then((value) => {
               if (value) {
                 setUser(value.obj);
-                this.$router.replace('/home');
+                if (this.$route.query.to) {
+                  this.$router.replace(this.$route.query.to);
+                } else {
+                  this.$router.replace('/home');
+                }
               }
             })
             .finally(() => {
@@ -72,6 +76,9 @@ export default {
         return false;
       });
     },
+  },
+  mounted() {
+    this.$refs.usernameInput.focus();
   },
 };
 </script>
