@@ -19,6 +19,10 @@ import {
   MessageBox,
   Breadcrumb,
   BreadcrumbItem,
+  Tabs,
+  TabPane,
+  Table,
+  TableColumn,
 } from 'element-ui';
 import App from './App.vue';
 import router from './router';
@@ -44,6 +48,10 @@ Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.use(Breadcrumb);
 Vue.use(BreadcrumbItem);
+Vue.use(Tabs);
+Vue.use(TabPane);
+Vue.use(Table);
+Vue.use(TableColumn);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$http = Http;

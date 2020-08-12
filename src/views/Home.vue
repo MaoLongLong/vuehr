@@ -34,7 +34,7 @@
           </el-menu>
         </el-aside>
         <el-main class="main">
-          <el-breadcrumb separator="/" v-if="$route.path !== '/home'">
+          <el-breadcrumb separator="/" v-if="$route.path !== '/home'" class="bread">
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item v-for="(r, i) in $route.matched" :key="i">
               {{ r.name }}
@@ -130,6 +130,16 @@ export default {
 
     .el-menu {
       border-right: none;
+
+      li .is-active {
+        background-color: #ecf5ff;
+      }
+    }
+  }
+
+  .main {
+    .bread {
+      margin-bottom: 20px;
     }
   }
 </style>

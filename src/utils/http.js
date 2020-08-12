@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Message, Loading } from 'element-ui';
 import router from '../router';
+import { clearLocalStorage } from './localStore';
 
 let loading = null;
 
@@ -37,7 +38,8 @@ instance.interceptors.response.use((value) => {
   } else if (error.response.status === 403) {
     Message.error('权限不足');
   } else if (error.response.status === 401) {
-    router.push('/');
+    clearLocalStorage();
+    router.push(`/?to=${router.currentRoute.path}`);
     Message.error('尚未登陆，请登录');
   } else if (error.data.msg || error.data.message) {
     Message.error(error.data.msg || error.data.message);
