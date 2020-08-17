@@ -5,7 +5,7 @@
         <h1 class="title">微人事</h1>
         <el-dropdown class="user-info" @command="commandHandler">
           <span class="el-dropdown-link">
-            {{ user.name }}<img :src="user.avatar" alt="avatar"/>
+            {{ user.name }}<el-avatar :src="user.avatar"></el-avatar>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="userInfo">个人中心</el-dropdown-item>
@@ -113,11 +113,8 @@ export default {
         font-weight: bold;
         color: #ffffff;
 
-        img {
-          border-radius: 50%;
+        span {
           margin-left: 8px;
-          width: 48px;
-          height: 48px;
         }
       }
     }
@@ -128,10 +125,14 @@ export default {
     border-right-color: rgb(230, 230, 230);
     overflow: hidden;
 
-    .el-menu {
+    .el-menu:first-child {
       border-right: none;
 
-      li .is-active {
+      li:first-child.is-active {
+        background-color: #ecf5ff;
+      }
+
+      ul > li.is-active {
         background-color: #ecf5ff;
       }
     }

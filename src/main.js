@@ -23,6 +23,13 @@ import {
   TabPane,
   Table,
   TableColumn,
+  Loading,
+  Dialog,
+  Select,
+  Option,
+  Switch,
+  Tag,
+  Avatar,
 } from 'element-ui';
 import App from './App.vue';
 import router from './router';
@@ -52,6 +59,13 @@ Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(Table);
 Vue.use(TableColumn);
+Vue.use(Dialog);
+Vue.use(Select);
+Vue.use(Option);
+Vue.use(Switch);
+Vue.use(Avatar);
+Vue.use(Tag);
+Vue.use(Loading.directive);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$http = Http;
@@ -59,6 +73,7 @@ Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$loading = Loading.service;
 
 new Vue({
   router,

@@ -1,24 +1,14 @@
 import axios from 'axios';
-import { Message, Loading } from 'element-ui';
+import { Message } from 'element-ui';
 import router from '../router';
 import { clearLocalStorage } from './localStore';
-
-let loading = null;
 
 const instance = axios.create({
   baseURL: '/api',
   timeout: 1500,
 });
 
-instance.interceptors.request.use((value) => {
-  loading = Loading.service({
-    lock: true,
-  });
-  return value;
-}, (error) => Promise.reject(error));
-
 instance.interceptors.response.use((value) => {
-  loading.close();
   if (value.status === 200 && value.data.status === 400) {
     Message.error(value.data.msg);
     return null;
@@ -28,7 +18,6 @@ instance.interceptors.response.use((value) => {
   }
   return value.data;
 }, (error) => {
-  loading.close();
   if (error.message.includes('timeout')) {
     Message.error('服务器超时');
     return Promise.reject(error);
@@ -41,8 +30,10 @@ instance.interceptors.response.use((value) => {
     clearLocalStorage();
     router.push(`/?to=${router.currentRoute.path}`);
     Message.error('尚未登陆，请登录');
-  } else if (error.data.msg || error.data.message) {
-    Message.error(error.data.msg || error.data.message);
+  } else if (error.response.data.msg) {
+    Message.error(error.response.data.msg);
+  } else if (error.response.status === 500) {
+    Message.error('服务端错误');
   } else {
     Message.error('未知错误');
   }

@@ -31,13 +31,10 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/') {
     if (!getUser()) {
       next();
+    } else if (from.path === '/') {
+      next('/home');
     } else {
-      Message.info('已登录');
-      if (from.path === '/') {
-        next('/home');
-      } else {
-        next(from.path);
-      }
+      next(from.path);
     }
   } else if (getUser()) {
     initMenu(router, store);
