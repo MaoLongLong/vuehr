@@ -67,24 +67,25 @@ export default {
   },
   methods: {
     commandHandler(cmd) {
-      console.log(cmd);
-      this.$confirm('此操作将注销登录, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      })
-        .then(() => {
-          this.$http.post('/logout');
-          clearLocalStorage();
-          this.$store.commit('initRoutes', []);
-          this.$router.replace('/');
+      if (cmd === 'logout') {
+        this.$confirm('此操作将注销登录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消操作',
+          .then(() => {
+            this.$http.post('/logout');
+            clearLocalStorage();
+            this.$store.commit('initRoutes', []);
+            this.$router.replace('/');
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消操作',
+            });
           });
-        });
+      }
     },
   },
 };

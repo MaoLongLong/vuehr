@@ -30,6 +30,11 @@ import {
   Switch,
   Tag,
   Avatar,
+  Collapse,
+  CollapseItem,
+  Tree,
+  Row,
+  Col,
 } from 'element-ui';
 import App from './App.vue';
 import router from './router';
@@ -61,10 +66,15 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Dialog);
 Vue.use(Select);
+Vue.use(Row);
+Vue.use(Col);
 Vue.use(Option);
 Vue.use(Switch);
 Vue.use(Avatar);
 Vue.use(Tag);
+Vue.use(Tree);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
 Vue.use(Loading.directive);
 
 Vue.prototype.$message = Message;
