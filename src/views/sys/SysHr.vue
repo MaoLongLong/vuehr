@@ -14,7 +14,8 @@
         <el-card class="box-card">
           <div slot="header" class="card-header">
             <h3>{{ hr.name }}</h3>
-            <el-button type="text" icon="el-icon-delete" style="color: red"/>
+            <el-button @click="deleteHr(hr.id)" type="text"
+                       icon="el-icon-delete" style="color: red"/>
           </div>
           <div class="box-body">
             <div class="avatar-container">
@@ -35,7 +36,23 @@
                 <el-tag size="small" type="success" v-for="(role, i) in hr.roles" :key="i">
                   {{ role.nameZh }}
                 </el-tag>
-                <el-button type="text" size="small" icon="el-icon-more"/>
+                <el-popover
+                  placement="right"
+                  title="角色列表"
+                  width="200"
+                  @show="showPop(hr)"
+                  @hide="hidePop(hr)"
+                  trigger="click">
+                  <el-select v-model="selectedRoles" multiple placeholder="请选择">
+                    <el-option
+                        v-for="(role, i) in allRoles"
+                        :key="i"
+                        :label="role.nameZh"
+                        :value="role.id">
+                    </el-option>
+                  </el-select>
+                  <el-button slot="reference" type="text" icon="el-icon-more" size="small"/>
+                </el-popover>
               </div>
               <div><strong>备注:</strong></div>
             </div>
@@ -51,13 +68,37 @@ export default {
   name: 'SysHr',
   data() {
     return {
+      visible: false,
       hrs: [],
       keywords: '',
+      allRoles: [],
+      selectedRoles: [],
     };
   },
   methods: {
+    showPop(hr) {
+      this.initAllRoles();
+      this.selectedRoles = [];
+      hr.roles.map((role) => this.selectedRoles.push(role.id));
+    },
+    hidePop(hr) {
+      this.$http.put(`/system/hr/roles/${hr.id}`, this.selectedRoles)
+        .then((value) => {
+          if (value) {
+            this.initHrs();
+          }
+        });
+    },
+    deleteHr(id) {
+      this.$http.delete(`/system/hr/${id}`)
+        .then((value) => {
+          if (value) {
+            this.initHrs();
+          }
+        });
+    },
     enabledChange(hr) {
-      this.$http.put('/system/hr', {
+      this.$http.put('/system/hr/enabled', {
         id: hr.id,
         enabled: hr.enabled,
       })
@@ -72,6 +113,14 @@ export default {
         .then((value) => {
           if (value) {
             this.hrs = value;
+          }
+        });
+    },
+    initAllRoles() {
+      this.$http.get('/system/hr/roles')
+        .then((value) => {
+          if (value) {
+            this.allRoles = value;
           }
         });
     },

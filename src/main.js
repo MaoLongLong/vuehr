@@ -35,6 +35,7 @@ import {
   Tree,
   Row,
   Col,
+  Popover,
 } from 'element-ui';
 import App from './App.vue';
 import router from './router';
@@ -75,6 +76,7 @@ Vue.use(Tag);
 Vue.use(Tree);
 Vue.use(Collapse);
 Vue.use(CollapseItem);
+Vue.use(Popover);
 Vue.use(Loading.directive);
 
 Vue.prototype.$message = Message;
